@@ -1,0 +1,173 @@
+练习：
+功能是要实现全选。
+
+步骤：
+①数据
+
+对象数组
+
+②绑定到table上去显示
+
+③解决部分选中以及全部选中
+
+当选中所有的checkbox，“全部选中checkbox”被选中：
+给部分选中checkbox指定的单击的处理函数
+在处理函数中对数组做遍历，根据与运算的结果，指定全选checkbox是否应该被选中
+
+
+
+一、服务
+
+双向数据绑定的工作原理：
+绑定时，ng会自动添加一个监听watcher,当数据发生变化时，会执行更新DOM操作的函数。
+怎么知道数据发生了变化？
+在ng中有一个循环$digest,会不断的对比数据，
+需要手工的触发循环做对比，可以通过：
+$scope.$digest();
+$scope.$apply();//触发$rootScope.$digest();
+
+
+ng内置的服务：
+$location $scope $rootScope $window $interval $timeout
+
+1、在ng中定时器相关的处理--》$interval $timeout
+
+
+练习：有3张图片，使用$interval来实现一个简单的图片轮播
+
+步骤：
+将图片名称存在一个数组中，然后通过定时器不断的切换下标读取图片名称显示在img标签。
+
+2、$http
+$http({method:'',url:''}).success().error()
+$http.get()
+$http.post()
+
+注意：如果需要发起post请求，需要设置:
+ app.run(function ($http) {
+        $http.defaults.headers.post = 
+{'Content-Type':'application/x-www-form-urlencoded'};})
+
+练习：点击按钮，通过发起post请求发送数据（name='zhangsan'）到服务器，服务器端接收数据并返回给客户端(Hello zhangsan)，将返回的结果显示出来(在html中)。
+注意事项：服务器返回时 数据要是json格式
+准备工作：
+xampp->apache
+测试的时候 请求php文件之前，测试php文件注意端口。
+步骤:
+①php②通过$http发请求
+③拿到服务器返回的结果显示在视图中。
+
+
+在调试程序时：
+①console 控制台错误信息
+②network 参数，response
+③注意端口号
+
+
+在发起post请求时，如果需要对参数进行序列化:
+借助于$httpParamSerializer服务，首先注入进来，$httpParamSerializer（obj）。
+
+
+二、自定义服务
+
+服务的目的是为了封装业务逻辑，提高代码的复用率
+
+自定义指令 app.directive
+自定义过滤器 app.filter
+自定义服务的方法：
+app.factory ('服务名称',function(){//普通方法 return {}})
+app.service('服务名称',function(){//构造函数})
+app.constant('服务名称'，{})//创建常量服务
+app.value('服务名称'，{})//创建变量服务
+
+注意事项：
+自定义的服务 需要用到其它服务中方法
+
+
+练习：使用service方法创建一个服务，
+有两个方法：
+开始心跳（每隔1s 在控制台打印一句话）、
+结束心跳 （结束定时器）
+
+视图：两个按钮：开始 结束。
+
+
+
+三、依赖注入
+
+
+将代码部署到线上，都会对代码做压缩。
+使用YUI-Compressor.jar （有java的运行环境）
+①借助于CLI（command line）
+
+java -jar yui**.jar  c:\demo10.js > c:\demo10.min.js
+
+②IDE（webStorm）
+file->settings->tools->fileWathchers->+->选中YUI-Compressor JS，在弹窗中的program选中对应的jar，保存即可
+
+压缩效果：
+会删除所有的注释、删除没有语义的空白字符、尽可能的简化变量的名称（混淆），但是数字、字符串、关键字是不会改变的。
+
+
+
+解决压缩后的问题方式：
+依赖注入：将依赖的服务或者其他，通过参数形式注入进来，背后ng框架会帮助对服务等做实例化的操作，让我们可以去直接使用
+
+注入的方式：
+①推断式（猜测）
+这种方式在进行压缩会有问题
+
+app.controller('myCtrl',function($scope){});
+
+②标记式
+由于文件压缩时，关键数据 字符串 关键字等不会被处理的；将所需要用到的服务，存在一个字符串（服务名称）数组。
+
+注意事项：在数组中服务名称的顺序和创建对应的处理函数参数的顺序是要保持一致的
+
+实现方式：1、将处理函数单独的存在一个变量中 2、给变量设置$inject，值是一个由字符串构成的数组 3、使用服务即可
+
+
+③行内式（内联式）
+在构建一个ng对象时，允许将一个字符型数组 作为对象的参数，在数组中可以：服务名称、函数（必须是在数组的最后一个元素）
+
+app.controller('myCtrl',['$scope',function($scope){}])
+
+
+依赖注入3种方式，官方推荐采用行内式依赖注入。
+
+
+
+
+依赖注入的背后：$injector 注入器：快速的定位到应用需要用到的各种该服务，整个ng应用的注入对象都是由$injector定位和创建。
+
+$injector.has('服务名称') ==》判断指定的服务是否存在
+
+$injector.get('服务名称') ==》 得到指定的服务对应的实例
+
+
+练习：实现一个服务$add,实现一个求和的方法（两个参数，将结果输出到控制台），采用行内式依赖注入 注入到控制器中；
+视图：有两个输入框，按钮；点击按钮时调用服务中的求和方法
+
+
+
+练习：实现心跳服务（功能是一样的）：
+①采用factory 
+②采用行内式依赖注入 
+③通过$injector来得到心跳服务实例
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

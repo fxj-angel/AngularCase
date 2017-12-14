@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <title></title>
+</head>
+<body>
+<div ng-controller="myCtrl">
+    <button ng-click="start()">开始</button>
+    <button ng-click="stop()">结束</button>
+</div>
+
+<script>
+    var app = angular.module('myApp', ['ng']);
+    //创建服务器---service
+    app.service('$HeartBeat',function($interval){
+        var promise;
+       this.startBeat=function(){
+           promise=$interval(function(){
+               console.log('beat...');
+           },1000)
+        };
+        this.stopBeat=function(){
+            $interval.cancel(promise);
+        }
+    });
+
+    app.controller('myCtrl', function ($scope,$HeartBeat) {
+        $scope.start=function(){
+            $HeartBeat.startBeat();
+        };
+        $scope.stop=function(){
+            $HeartBeat.stopBeat();
+        }
+    });
+</script>
+</body>
+</html>

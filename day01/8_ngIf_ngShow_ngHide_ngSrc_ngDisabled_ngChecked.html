@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html ng-app>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <title></title>
+</head>
+<body>
+    <div ng-init="
+        isMemeber=false;
+        hasMore=true;
+        imgUrl='logo.png';
+        isAgree=true;
+        isFormValid=true
+    ">
+        <p ng-if="isMemeber">仅会员可见</p>
+
+        <button ng-show="hasMore">加载更多</button>
+        <p ng-hide="hasMore">没有更多数据加载了</p>
+
+        <img ng-src="img/{{imgUrl}}"/>
+
+        是否同意：<input type="checkbox" ng-checked="isAgree"/><br/><br/>
+
+        <!--表单通过验证-->
+        <button ng-disabled="!isFormValid">注册</button>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

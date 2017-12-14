@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <title></title>
+</head>
+<body>
+    <!--在ng中ngApp可以指定作用范围-->
+    <div ng-app>
+        <span>{{2+3}}</span>
+    </div>
+    <h1>{{3*5}}</h1>
+
+    <!--在ng中ngApp指令只有第一次是生效的-->
+    <div ng-app>
+        <!--无效-->
+        <p>{{5+2}}</p>
+    </div>
+
+    <!--通过ngInit一次初始化多个变量-->
+    <span ng-init="list=[100,200,300];num=1">
+        {{list[num]}}
+    </span>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <title></title>
+</head>
+<body>
+<div ng-controller="myCtrl">
+
+</div>
+
+<script>
+    var app = angular.module('myApp', ['ng']);
+    //创建自定义服务
+    app.service('$test',function(){
+       this.print=function(){
+           console.log('it is a test');
+       }
+    });
+    app.factory('$Show',function($test){
+        return{
+            show:function(){
+                //打印一句话
+                $test.print();//调用其他服务中的方法
+            }
+        }
+    });
+    app.controller('myCtrl', function ($scope,$Show) {
+        $Show.show();
+    });
+</script>
+</body>
+</html>

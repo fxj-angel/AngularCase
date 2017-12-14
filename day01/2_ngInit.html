@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <title></title>
+</head>
+<body>
+    <!--算术运算-->
+    <h1>{{3*5}}</h1>
+
+    <!--比较符运算-->
+    <span>{{3>5}}</span>
+
+    <!--逻辑运算&&  ||  !  -->
+    <p>真与假的与运算：{{true && false}}</p>
+
+    <!--三目运算-->
+    <p>{{3>2?'大于':'小于等于'}}</p>
+
+    <!--同过ngInit指令定义一个数组-->
+    <span ng-init="list=[100,200,300]">
+        {{list[1]}}
+    </span>
+    <p>{{list[2]}}</p>
+
+    <span ng-init="car={name:'bmw',price:20}">
+        {{car.name+'汽车的价格为：'+car.price+'万'}}
+    </span>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <title></title>
+</head>
+<body>
+<div ng-controller="myCtrl">
+    是否同意：<input ng-model="isChecked" type="checkbox"/><br/><br/>
+    选择性别：<input ng-model="sex" type="radio" name="sex" value="1"/>男
+              <input ng-model="sex" type="radio" name="sex" value="0"/>女<br/><br/>
+    选择所在城市：
+    <select ng-model="location">
+        <option>请选择城市</option>
+        <option>深圳市</option>
+        <option>广州市</option>
+        <option>上海市</option>
+        <option>北京市</option>
+    </select>
+</div>
+
+<script>
+    var app = angular.module('myApp', ['ng']);
+    app.controller('myCtrl', function ($scope) {
+        console.log('myCtrl function is called!');
+        $scope.isChecked="";
+        $scope.$watch('isChecked',function(){
+            console.log($scope.isChecked);
+        });
+        $scope.sex="";
+        $scope.$watch('sex',function(){
+            console.log($scope.sex);
+        });
+        $scope.location="请选择城市";
+        $scope.$watch('location',function(){
+            console.log($scope.location);
+        })
+    })
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

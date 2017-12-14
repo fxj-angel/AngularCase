@@ -1,0 +1,10 @@
+<h2>订单提交页面</h2>
+<form name="myForm">
+    输入名称：<input type="text" name="myName" ng-model="p_name" required/>
+    <!--没有通过验证并且也输入过-->
+    <span ng-show="myForm.myName.$invalid && myForm.myName.$dirty">名称不能为空</span>
+    <br/><br/>
+    输入数量：<input type="text" name="myCount" ng-model="p_count" required/>
+    <br/><br/>
+    <input ng-disabled="myForm.$invalid" ng-click="jump()" type="submit" value="提交"/>
+</form>

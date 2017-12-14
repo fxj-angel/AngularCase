@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <title></title>
+</head>
+<body>
+<div ng-controller="myCtrl" ng-submit="submitInfo()">
+    <form name="myForm">
+        <input type="text" name="t_name" ng-model="userName" required/>
+        <span ng-show="myForm.t_name.$error.required">姓名不能为空</span>
+        <br/><br/>
+        <input type="text" name="t_age" ng-model="userAge" required/>
+        <span ng-show="myForm.t_age.$invalid">验证失败</span>
+        <span ng-show="myForm.t_age.$pristine">没有输入过</span>
+        <br/><br/>
+        <input ng-disabled="myForm.$invalid" type="submit" value="提交"/>
+    </form>
+</div>
+
+<script>
+    var app = angular.module('myApp', ['ng']);
+    app.controller('myCtrl', function ($scope) {
+        $scope.submitInfo=function(){
+            console.log($scope.userName,$scope.userAge);
+        }
+    });
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

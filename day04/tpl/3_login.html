@@ -1,0 +1,15 @@
+<div ng-controller="LoginCtrl">
+    <h1>这是登录页面</h1>
+    <button ng-click="jump('/myStart/0')">跳转到起始页面</button>
+    <a href="#/myRegister">没有账号呢？去注册</a>
+
+    <!--超链接传参-->
+    <!--从登录页面 跳转到 起始页 发送参数-->
+    <!--1、发送：login   接收：start-->
+    <!--2、配置start的路由-->
+    <!--3、解析参数$routeParams-->
+    <!--4、发送参数-->
+    <a href="#/myStart/100">登录到起始页面</a>
+    <br/>
+    <button ng-click="jump('/myStart/100')">跳转到起始页面</button>
+</div>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <script src="js/angular-route.js"></script>
+    <title></title>
+</head>
+<body>
+<div ng-view></div>
+
+<script>
+    var app=angular.module('myApp',['ng','ngRoute']);
+    //配置路由
+    app.config(function($routeProvider){
+        //配置接收方的路由
+        $routeProvider.when('/myStart/:id',{
+            templateUrl:'tpl/2_start.html'
+        }).when('/myLogin',{
+            templateUrl:'tpl/3_login.html'
+        }).when('/myRegister',{
+            templateUrl:'tpl/3_register.html'
+        }).otherwise({
+            redirectTo:'/myLogin'
+        })
+    });
+    //创建登录页控制器
+    app.controller('LoginCtrl',['$scope','$location',function($scope,$location){
+        $scope.jump=function(desPath){
+            //跳转到myStart路由地址所对应的模板
+            $location.path(desPath);
+        }
+    }]);
+
+    //创建起始页的控制器
+    app.controller('StartCtrl',['$scope','$routeParams',function($scope,$routeParams){
+        console.log($routeParams.id);
+    }])
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

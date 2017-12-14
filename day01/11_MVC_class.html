@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <title></title>
+</head>
+<body>
+    <div ng-controller="myCtrl">
+        <ul>
+            <li ng-repeat="index in list">
+                <img ng-src="img/{{index.imgUrl}}"/>
+                <p>{{index.name}}</p>
+                <p>{{index.price}}</p>
+            </li>
+        </ul>
+        <button ng-click="loadMore()">加载更多</button>
+    </div>
+
+    <script>
+        //模块的创建和调用
+        var app=angular.module('myApp',['ng']);
+        //控制器的创建和调用
+        app.controller('myCtrl',function($scope){
+            console.log('控制器被调用了!');
+            $scope.list=[{imgUrl:'phone_07.png',name:'vivo',price:2580},
+                         {imgUrl:'phone_09.jpg',name:'huaweiP9',price:3999},
+                         {imgUrl:'phone_25.jpg',name:'jinli',price:2899}
+                        ];
+            $scope.loadMore=function(){
+                $scope.list.push({imgUrl:'phone_31.jpg',name:'sanxing',price:1500});
+            }
+        })
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

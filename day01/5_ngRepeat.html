@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html ng-app>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <title></title>
+</head>
+<body>
+    <!--ngRepeat语法一 主要用于列表中-->
+    <ul ng-init="list=[111,222,333]">
+        <!--<li>{{list[0]}}</li>-->
+        <!--<li>{{list[1]}}</li>-->
+        <!--<li>{{list[2]}}</li>-->
+        <li ng-repeat="tmp in list">{{tmp}}</li>
+    </ul>
+    <!--ngRepeat语法二、主要用于对象中-->
+    <ol>
+        <li ng-repeat="(index,value) in list">
+            {{"index is "+index+", value is "+value}}
+        </li>
+    </ol>
+
+    <div ng-init="car={name:'Volvo',price:15}">
+        <p ng-repeat="(key,value) in car">
+            {{"属性名为"+key+", 值为"+value}}
+        </p>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

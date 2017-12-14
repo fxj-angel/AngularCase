@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <title></title>
+</head>
+<body>
+<div ng-controller="myCtrl">
+    <!--将数据模型isClick绑定到button上，属于方向1的绑定-->
+    <button ng-click="add()" ng-disabled="isClick">click me</button>
+    <!--将模型数据count绑定到p，属于方向1的绑定-->
+    <p>{{count}}</p>
+</div>
+
+<script>
+    var app = angular.module('myApp', ['ng']);
+
+    app.controller('myCtrl', function ($scope) {
+        console.log('myCtrl function is called!');
+        $scope.count=0;
+        $scope.isClick=false;
+        //按钮点击时的处理函数
+        $scope.add=function(){
+            $scope.count++;
+            //当count>=5时,让按钮非使能
+            if($scope.count>=5){
+                $scope.isClick=true;
+            }
+        }
+    })
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <title></title>
+</head>
+<body>
+<div ng-controller="myCtrl">
+    <!--将price所对应的值通过管道传递给自定义的过滤器-->
+    <h1>{{price | myFilter:'￥'}}</h1>
+</div>
+
+<script>
+    var app = angular.module('myApp', ['ng']);
+
+    //创建过滤器:过滤器的本质是方法，有输入输出
+    app.filter('myFilter',function(){
+       return function(input,arg){
+           console.log('输入为：'+input);
+           console.log('过滤器的参数为：'+arg);
+           var output=arg+input;
+           return output;
+       }
+    });
+
+    app.controller('myCtrl', function($scope){
+        $scope.price=200;
+    })
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

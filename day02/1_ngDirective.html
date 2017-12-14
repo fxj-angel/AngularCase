@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <title></title>
+</head>
+<body>
+<div ng-controller="myCtrl">
+
+</div>
+<!--作为扩展属性-->
+<div ts-hello></div>
+<!--作为扩展标签-->
+<ts-hello></ts-hello>
+<!--作为class使用-->
+<div class="ts-hello"></div>
+<!--作为注释来使用-->
+<!-- directive: ts-hello -->
+
+<script>
+    var app=angular.module('myApp',['ng']);
+
+    //自定义指令
+    app.directive('tsHello',function(){
+       return{
+           template:'<h1>Hello Directive</h1>', //指定要显示的模板内容
+           restrict:'EACM', //E(Element)A(Attribute)C(Class)M(Comment)
+           replace:true//作为注释用要加上replace(替换并显示出来)
+       }
+    });
+
+    app.controller('myCtrl',function(){
+        console.log('myCtrl function is called!');
+    })
+</script>
+</body>
+</html>

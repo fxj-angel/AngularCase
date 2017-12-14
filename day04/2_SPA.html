@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <script src="js/angular-route.js"></script>
+    <title></title>
+</head>
+<body>
+<!--通过ngView创建一个盛放代码片段的容器-->
+<div ng-view>
+
+</div>
+<script>
+    //创建一个完整的页面中，引入ng和ngRoute模块
+    var app=angular.module('myApp',['ng','ngRoute']);
+
+    //配置路由词典
+    app.config(function($routeProvider){
+        $routeProvider.when('/myStart',{
+            templateUrl:'tpl/2_start.html'
+        }).when('/myCheck',{
+            templateUrl:'tpl/2_check.html'
+        }).otherwise({
+            redirectTo:'/myStart'
+        })
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <title></title>
+</head>
+<body>
+<div ng-controller="myCtrl">
+    <h2>{{num}}</h2>
+</div>
+<script>
+    var app=angular.module('myApp',['ng']);
+    //创建服务
+    app.service('$custom',function(){
+       this.print=function(){
+           console.log('print function is called');
+       }
+    });
+
+    //方式一：创建注入器(管理ng模块和myApp模块中的一些服务)
+    var injector=angular.injector(['ng','myApp']);
+    if(injector.has('$custom')){
+        injector.get('$custom').print();
+    }
+
+    //采用行内式依赖注入
+    //方式二：直接注入$injector
+//    app.controller('myCtrl',['$scope','$custom',function($scope,$custom){
+//        $scope.num=100;
+//        $custom.print();
+//    }])
+    app.controller('myCtrl',['$scope','$injector',function($scope,$injector){
+        $scope.num=100;
+        //判断指定服务是否存在
+        var result=$injector.has('$custom');
+        //console.log(result);
+        if(result===true){
+            var obj=$injector.get('$custom');
+            console.log(obj);
+            obj.print();
+        }
+    }])
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

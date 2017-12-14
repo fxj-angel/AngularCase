@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/angular.js"></script>
+</head>
+<body>
+<!--方向2：将用户在视图中的输入 绑定到 模型数据-->
+<div ng-controller="myCtrl">
+    <!-- 方向2的绑定方式：ngModel-->
+    <input type="text" ng-model="txt"/>
+
+    <!-- 方向1的绑定：只要是txt更新了，视图h1也会更新-->
+    <h1>{{txt}}</h1>
+</div>
+
+<script>
+    var app = angular.module('myApp', ['ng']);
+
+    app.controller('myCtrl', function ($scope) {
+        $scope.txt = "";
+        console.log($scope.txt);
+
+        //如果要想看数据的变化，可以通过$watch进行监听
+        $scope.$watch('txt', function () {
+            console.log($scope.txt);
+        });
+    });
+</script>
+</body>
+</html>

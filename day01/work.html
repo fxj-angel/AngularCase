@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <title></title>
+    <style>
+        div{
+            width:300px;
+            min-height:150px;
+            border:3px solid red;
+        }
+        div>button{
+            margin:10px;
+        }
+        table{
+            width:100%;
+            margin-bottom:10px;
+        }
+        td{
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+    <div ng-controller="myCtrl">
+        <button ng-click="add()">添加</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>单价</th>
+                    <th>数量</th>
+                    <th>小计</th>
+                    <th>删除</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="tmp in cart">
+                    <td>{{tmp.price}}</td>
+                    <td>{{tmp.count}}</td>
+                    <td>{{tmp.price*tmp.count}}</td>
+                    <td><button ng-click=del()>删除</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        //创建和调用模块
+        var app=angular.module('myApp',['ng']);
+        //创建和调用控制器
+        app.controller('myCtrl',function($scope){
+            //console.log('成功调用控制器');
+            $scope.cart=[
+                {price:6,count:3},
+                {price:1,count:3},
+                {price:4,count:3}
+            ];
+            //点击添加调用的函数
+            $scope.add=function(){
+                $scope.p=Math.floor(Math.random()*9+1);
+                $scope.c=Math.floor(Math.random()*15+1    );
+                $scope.cart.push({price:$scope.p,count:$scope.c});
+            };
+            //点击删除调用的函数
+            $scope.del=function(){
+                $scope.cart.splice(this.$index,1);
+            }
+        })z
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

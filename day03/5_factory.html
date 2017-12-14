@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <title></title>
+</head>
+<body>
+<div ng-controller="myCtrl">
+    <button ng-click="handleClick()">click me</button>
+</div>
+
+<script>
+    var app = angular.module('myApp', ['ng']);
+
+    //创建一个自定义的服务
+    app.factory('$output',function(){
+        return{
+            print:function(){
+                console.log('function in $output is called');
+            }
+        }
+    });
+
+    app.controller('myCtrl', function ($scope,$output) {
+        $scope.handleClick=function(){
+            //调用自定义服务所提供的方法
+            $output.print();
+        }
+    });
+</script>
+</body>
+</html>

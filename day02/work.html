@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <title></title>
+</head>
+<body>
+<div ng-controller="myCtrl">
+    收货人：<input ng-model="uName" type="text"/><br/><br/>
+    性别：<input ng-model="sex" type="radio" value="男"/>男
+          <input ng-model="sex" type="radio" value="女"/>女<br/><br/>
+    是否打包：<input ng-model="isChecked" type="checkbox"/><br/><br/>
+    <button ng-disabled="bt">提交</button>
+</div>
+<script>
+    var app=angular.module('myApp',['ng']);
+    app.controller('myCtrl',function($scope){
+        //接受收件人的信息
+        $scope.uName="";
+        $scope.$watch('uName',function(){
+            console.log($scope.uName);
+        });
+        $scope.sex="";
+        $scope.$watch('sex',function(){
+            console.log($scope.sex);
+        });
+        $scope.isChecked="";
+        $scope.bt=true;
+        $scope.$watch('isChecked',function(){
+            console.log($scope.isChecked);
+            if($scope.isChecked){
+                $scope.bt=false;
+            }
+        });
+    })
+</script>
+</body>
+</html>

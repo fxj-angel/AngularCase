@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <title></title>
+</head>
+<body>
+<div ng-controller="myCtrl">
+    <!--方向2的绑定-->
+    请输入留言的内容：
+    <textarea ng-model="userMsg"></textarea>
+</div>
+
+<script>
+    var app = angular.module('myApp', ['ng']);
+    app.controller('myCtrl', function ($scope) {
+        console.log('myCtrl function is called!');
+        $scope.userMsg="";
+        //通过$watch监听模型数据的变化
+        $scope.$watch('userMsg',function(){
+            console.log($scope.userMsg);
+        });
+    })
+</script>
+</body>
+</html>

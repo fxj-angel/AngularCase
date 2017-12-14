@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <title></title>
+</head>
+<body>
+    <!--要求：点击按钮在控制台输出一句话-->
+    <div ng-controller="myCtrl">
+
+        <!--通过{{}}将数据绑定到视图中，数据被修改了视图也会跟着更新-->
+        <h2>{{count}}</h2>
+
+        <!--通过ng-click来指定按钮点击的处理函数-->
+        <button ng-click="handleClick()">click Me</button>
+    </div>
+
+
+    <script>
+        //1、模块的创建和调用
+        var app=angular.module('myApp',['ng']);
+
+        //2、控制器的创建和调用
+        app.controller('myCtrl',function($scope){
+            console.log('控制器的处理函数被调用了！');
+            $scope.count=0;
+            $scope.handleClick=function(){
+                console.log('按钮被点击了');
+                $scope.count++;
+            };
+        });
+
+        //3、模型数据和视图相关的操作
+    </script>
+</body>
+</html>

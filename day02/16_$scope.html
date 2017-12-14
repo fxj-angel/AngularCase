@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <title></title>
+</head>
+<body>
+<div ng-controller="myCtrl01">
+    <button ng-click='sendToChild()'>向myCtrl02传递参数</button>
+    <div ng-controller="myCtrl02">
+        <button ng-click="sendToParent()">向父作用于传数据</button>
+    </div>
+</div>
+
+<script>
+    var app = angular.module('myApp', ['ng']);
+    app.controller('myCtrl01',function($scope){
+        $scope.sendToChild=function(){
+            $scope.$broadcast('event1','hello');
+        };
+        //绑定一个event2的事件
+        $scope.$on('event2',function(event,data){
+            console.log('data from son is '+data);
+        })
+    });
+    app.controller('myCtrl02',function($scope){
+        //绑定一个event1的事件
+        $scope.$on('event1',function(event,data){
+            console.log('myCtrl02 rev data is '+data);
+        });
+        $scope.sendToParent=function(){
+            $scope.$emit('event2','Hello Parent');
+        }
+    });
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

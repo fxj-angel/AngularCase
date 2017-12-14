@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html ng-app="cartModule">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <title></title>
+</head>
+<body>
+<div ng-controller="myCtrl">
+    <button ng-click="buy()">购买</button>
+</div>
+
+<script>
+    //创建模块一：用户模块
+    var myUser=angular.module('userModule',['ng']);
+    //创建一个服务:判断当前是否有用户登录
+    myUser.service('$loginService',[function(){
+        this.isLogin=function(){
+            console.log('检查当前是否有用户登录');
+        }
+    }]);
+
+    //创建模块二:购物车模块，并指定依赖于userModule
+    var myCart=angular.module('cartModule',['userModule']);
+    //创建购物车模块中的控制器
+    myCart.controller('myCtrl',['$scope','$loginService',function($scope,$loginService){
+        $scope.buy=function(){
+            //判断是否登录
+            $loginService.isLogin();
+        }
+    }]);
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

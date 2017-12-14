@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <script src="js/angular-route.js"></script>
+    <script src="js/angular-animate.js"></script>
+    <title></title>
+</head>
+<body>
+<div ng-controller="ParentCtrl" ng-view></div>
+
+<script>
+    var app=angular.module('myApp',['ng','ngRoute','ngAnimate']);
+    //配置路由
+    app.config(function($routeProvider){
+        $routeProvider.when('/myCheck',{
+            templateUrl:'tpl/5_checkProduct.html'
+        }).when('/myPay/:price',{
+            templateUrl:'tpl/5_pay.html'
+        }).when('/mySend',{
+            templateUrl:'tpl/5_send.html'
+        }).otherwise({
+            redirectTo:'/myCheck'
+        })
+    });
+    //创建check页面的控制器
+    app.controller('ParentCtrl',['$scope','$location',function($scope,$location){
+        $scope.jump=function(desPath){
+            $location.path(desPath);
+        }
+    }]);
+    //创建支付页面的控制器
+    app.controller('PayCtrl',['$scope','$location','$routeParams',function($scope,$location,$routeParams){
+        $scope.jump=function(){
+            $location.path('/mySend');
+        };
+        $scope.price=$routeParams.price;
+    }])
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

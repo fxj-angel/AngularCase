@@ -1,0 +1,263 @@
+
+一、设计原则和设计模式
+拙劣的设计：
+①僵化
+②脆弱
+③不必要的复杂
+④晦涩。。
+
+
+1、YAGNI（不要写不需要的代码）
+you aren't gonna need it
+
+2、KISS （越简单越好）
+keep it simple and stupid
+语义化的标记、命名规则、减少嵌套
+
+3、DRY（善于使用封装和重用）
+Don't Repeat Yourself
+
+4、高内聚 低耦合（High cohesion,low coupling）
+内聚：一个组件（模块）内部的不同部分的关系
+耦合：不同组件（模块）之间的关系
+
+5、SRP 单一责任原则
+Single Responsibility Principle 
+
+实现功能的时候，尽可能的做到每一个模块实现一个单一的功能
+
+6、OCP原则(对于扩展开放、对于修改关闭)
+open close principle
+
+7、LCP（迪米特法则）
+Least Knowledge Principle 最少知识法则：封装的功能单位要尽可能的小，尽量做到只与自己相关
+
+
+常用的设计模式分为3大类：①创建 ②结构 ③行为
+
+常用的设计模式：工厂方法模式、单例模式、组合模式、迭代子模式、适配器。。
+（以后的学习 详细解释 ）
+
+
+先去实现功能，在迭代的过程中优化代码。
+
+
+
+
+二、AngularJS
+
+认识新东西最好的方式：
+①官网
+②维基百科 wikipedia.org
+
+3W1H
+
+what?
+ng(AngularJS)是一个开源的js框架
+
+where？
+用来实现SPA应用程序（单一页面应用程序single page application）
+
+Gmail邮箱是由Google退出的前端历史中第一个SPA应用
+
+why？
+四大特征：
+①采用了MVC的设计模式
+Model 模型数据
+View  视图
+Controller 控制器
+
+MVC的工作原理：
+View视图 接收用户的输入，通过控制器（Controller）当中的方法，完成对于Model的增删改查的操作。
+数据绑定：将数据和视图绑定起来，一旦数据被修改了，视图就会更新
+
+
+②双向数据绑定
+数据-》视图
+视图用户的输入 -》 数据
+
+③依赖注入
+
+
+④模块化设计
+
+
+
+
+三、使用ng
+
+1、基本语法
+<any>{{表达式}} </any>
+
+直接按照上述方法写，结果是不对的，解决方案：在html标签写上了ng-app
+
+2、常用指令
+ngApp
+①启动ng
+②指定作用范围，将指令写在根标签
+
+快捷键：在webStorm中alt+f2,快速选中要去执行在哪个浏览器。
+
+ngInit 指令 来完成数据的初始化
+<any ng-init="num=2"></any>
+①不需要在通过ngInit指令定义数据时候，加上var关键字
+②ngInit所初始化的变量是可以在整个html去使用变量
+
+练习：
+通过ngInit指令来初始化一个学生数组（模拟5个），每一个学生都有以下属性:name\score\sex，要求将数据显示在table中
+
+①初始化数据
+对象数组
+
+②显示
+创建table，将数据显示在每一行中的每一列
+
+四、常用指令
+ng中指令：由angularJS提供了，可以用在html中作为扩展属性、扩展标签。。
+
+作为扩展属性来使用：
+<div ng-**></div>
+ngInit  --> ng-init
+ngApp --> ng-app
+
+作为扩展标签来使用：
+<ngView/>
+
+
+①ngApp
+	启动ng
+	指定作用范围，将指令写在根标签
+	注意事项：调用一次ngApp
+②ngInit
+	通过ngInit调用一次，初始化多个变量？？
+	<any ng-init="a=1;b=2"/>
+③ngRepeat
+	重复实例化模板
+	两种语法：
+	<any ng-repeat="临时变量的名称 in 集合的名称"></any>
+	<any ng-repeat="（key,value） in 集合的名称"></any>
+	
+	注意事项：在使用ngRpeat的时候要遍历的集合默认是不允许有重复的数据，可以通过 track by $index来指定一个不会重复的值就可以解决报错的问题。
+
+练习：将学生数组通过ngRepeat来重构
+
+④ngIf、ngShow、ngHide、ngSrc、ngDisabled、ngChecked
+	ngIf-》选择是否要显示出来（挂载到DOM，从DOM中删除）
+	ngShow/ngHide ->选择是否要显示出来(显示或者隐藏)
+
+	<any ng-if="表达式"></any>
+	<any ng-show="表达式"></any>
+	<any ng-hide="表达式"></any>
+	注意事项：在使用ngSrc去读取变量中值的时候，要记得加上双花括号
+	<img ng-src="img/{{imgUrl}}" /> 如果你写的不是ngSrc而是src，显示是ok的，但是控制台是会报错的，通过ngSrc去指定就搞定了
+	<any ng-disabled='表达式'></any>
+
+	<input type='checkbox' ng-checked="表达式"/>
+
+练习：要求把学生数组中成绩大于82分的，显示在table中，否则从DOM中把其余的删除
+
+
+五、MVC
+在ng中：
+Model 模型数据：在ng中定义的一些变量
+View  视图：通过ng指令和表达式增强版的html
+Controller 控制器：负责数据的增删改查的
+
+MVC的好处:在实现大型应用程序，可以通过将视图和数据隔离开，有效的降低代码的复杂度、耦合度
+
+在ng中应该怎么做才能实现一个SPA？？
+
+准备工作：
+①创建一个模块
+因为在ng中是以模块为基本单位的
+
+var app = angular.module('模块的名称'，['依赖模块1','依赖模块2'])
+
+②使用模块
+采用ngApp指令
+<html ng-app="模块的名称"></html>
+
+③创建一个控制器
+
+app.controller('控制器的名称',function(){})
+第二个参数时控制器被调用时，要执行的方法
+
+④调用控制器
+
+采用ngController指令来调用控制器
+<div ng-controller='控制器的名称'></div>
+
+
+实现数据的创建和显示等：
+⑤操作数据、显示出来
+
+$scope是一个对象，称之为作用域对象，是一个非常重要的概念，建立起控制器中的数据和控制器的所指定的视图的桥梁
+
+
+绑定事件的时候，在ng的做法： <any ng-eventName="handle()">
+<button ng-click="handleClick()"></button>
+
+注意事项：
+由于ngInit和$scope都可以完成数据的初始化，建议使用$scope,因为ngInit会增加代码的耦合度和复杂度。
+
+
+练习：点击按钮加载更多数据显示在列表中。
+
+数据（对象数组）、ngRepeat将数据显示在ul
+
+点击按钮：向数组中插入数据（数组绑定到了列表，只要是数组内容更新了，视图中的列表自然也会跟着更新）
+
+
+每日一练：
+简单的购物车
+
+删除功能是借助于$index来去实现。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

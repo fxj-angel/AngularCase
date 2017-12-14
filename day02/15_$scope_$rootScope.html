@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+  <script src="js/angular.js"></script>
+</head>
+<body>
+
+<div ng-controller="myCtrl01">
+  <p>{{"in myCtrl01 name is "+name}}</p>
+</div>
+
+<div ng-controller="myCtrl02">
+  <p>{{"in myCtrl02 name is "+name}}</p>
+  <p>{{"in myCtrl02 schoolName is "+schoolName}}</p>
+  <!-- 控制器之间的嵌套-->
+  <div ng-controller="myCtrl03">
+    <p>{{'inMyCtrl03 age is '+age}}</p>
+  </div>
+</div>
+
+<script>
+  var app = angular.module('myApp',['ng']);
+
+  app.controller('myCtrl01', function ($scope,$rootScope) {
+    $scope.name = 'myCtrl01';
+    console.log($scope);
+    console.log($rootScope);
+    $rootScope.schoolName = "Tarena";
+  })
+
+  app.controller('myCtrl02', function ($scope){
+    console.log($scope);
+    $scope.age = 10;
+  });
+
+  app.controller('myCtrl03', function ($scope) {
+
+  })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+一、模块化设计
+
+ng有4大特征：
+①MVC
+②双向数据绑定
+③依赖注入
+④模块化设计
+
+高内聚低耦合，在ng中有两种：①内置的模块 ②自定义的模块
+
+如何自定义模块？
+angular.module();
+
+使用模块？
+ng-app=""
+在创建模块时，在第二个参数所对应的数组中写上服务的名称
+
+
+一个ng的模块都可以包含哪些？
+控制器：对应部分业务逻辑的封装
+服务：经常用到的重复代码封装
+指令：扩展html标签、属性
+过滤器：针对数据做一些筛选 过滤 格式化的处理
+
+
+
+二、ngRoute（路由模块）
+
+ng是主要实现SPA（单一页面应用程序）
+
+
+SPA的工作原理：
+1、页面url
+http://127.0.0.1/index.html#/路由地址
+例如：http://127.0.0.1/index.html#/start
+2、解析index.html 是一个完整的html页面，再解析路由地址(start)
+3、在路由词典中寻找路由地址(start)所对应的路由信息
+4、在路由信息所对应的对象中找到真实的模板页面地址
+5、（发起异步ajax）加载模板页面到指定的容器中，实现局部刷新
+
+
+ngRoute（路由模块）可以定义路由词典，自动解析路由地址，查找路由词典，自动发起ajax请求加载页面显示。
+
+0、在创建自定义模块，在依赖列表中指定ngRoute
+1、指定盛放代码片段的容器
+2、配置路由词典
+
+使用ngRoute的基本步骤：
+①创建一个完整的html页面
+记得引入angular.js angular-route.js
+
+②创建模块，并指定依赖于ngRoute模块
+angular.module('myApp',['ng','ngRoute'])
+
+③使用指令创建一个盛放代码片段的容器
+调用ngView指令：创建一个容器，代码片段会加载到这里
+
+④创建模板页面
+
+⑤配置路由词典
+$routeProvider
+when是用来添加一条路由信息的(路由地址的字符串是以/开始)
+$routeProvider.when('/myStart',{controller:'',template/templateUrl:''})
+otherwise是用来指定异常的处理
+$routePriovder.otherwise({redirectTo:'路由地址'})
+
+
+https://github.com/angular-ui/ui-router
+uiRouter是一个优秀的第三方的路由模块（在移动端课程的第三天）
+
+
+练习：创建一个SPA，有两个代码片段：login register,要求：你通过修改地址栏中的路由地址 切换显示不同的代码片段。
+
+
+
+SPA在ng实现过程，代码片段的跳转：
+①直接修改地址栏中的路由地址
+http://localhost:63342/day4/demo03_SPA%E7%BB%83%E4%B9%A0.html#/myLogin
+http://localhost:63342/day4/demo03_SPA%E7%BB%83%E4%B9%A0.html#/myRegister
+②通过js的方式
+$location.path('路由地址')
+③超链接的方式
+a href="#/myRegister"
+
+login->start 10
+
+SPA应用程序通过ngRoute来传递参数：
+①搞明白 发送 接收
+②配置接收方的路由
+$routeProvider.when('/myStart/:num',{
+templateUrl:'tpl/start.html'
+})
+③拿到传递过来的参数
+$routeParams.num
+④发送
+a href='#/myStart/10'
+$location.path('/myStart/10')
+
+注意事项：配置接收方路由时的冒号后的变量名称要和通过$routeParams解析参数的属性是要保持一致
+myStart/:id $routeParams.id
+
+
+
+练习：实现一个SPA
+完整的html manager.html
+代码片段： checkProduct.html pay.html send.html
+
+要求：能够实现不同页面的跳转以及参数的传递
+checkProduct.html 能够a跳转到pay，传递price，在pay接收传递过来的参数显示在pay页面
+pay 点击button跳转到send
+send button以及a跳转到check.html
+
+
+优化思路：如果多个控制器需要用到同一个方法或者数据，①将方法和数据封装成一个服务 ②$rootScope ③控制器之间的嵌套 ④借助于事
+件
+
+由于不同的代码片段都显示在了body的子元素中：body是所有代码片段的父元素，可以在body指定控制器，控制器中的方法和数据，代码片段就可以用了。
+
+①发送 接收
+checkProduct --> pay 
+
+②配置接收方路由
+.when('/myPay/:price',{})
+
+③$routeParams
+$routeParams.price
+
+④发送参数
+href='#/myPay/20'
+$location.path('/myPay/20')
+
+
+ngInclude 引入多个地方同时需要用到的，比如页头、页尾。。。
+
+要求：给综合练习的3个代码片段加上头信息(显示一个p标签)
+
+注意事项：在使用ngInclude进行赋值的时候，对应的路径字符串要在双引号内 加上一对单引号
+
+
+四、ngAnimate（动画模块）
+
+在angularJS添加动画效果，需要用到ngAnimate模块
+
+基本步骤：
+①引入对应的js文件
+angular-animate.js
+②指定自定义模块依赖于ngAnimate
+angular.module('myModule',['ng','ngRoute','ngAnimate'])
+③css给ng应用程序添加动画效果：
+ngEnter 准备进入
+ngEnterActive 进入完成
+ngLeave 准备离开
+ngLeaveActive 离开完成
+④引入对应的css文件
+
+
+如果用到其它的模块整体思路：
+①在ng每一个模块都有自己的js文件，用到哪个模块，把指定模块的js文件引入进来
+②在创建模块，指定依赖列表
+③根据模块中所提供的指令、服务。。结合业务需要进行
+
+
+
+五、表单验证
+
+在ng中，针对表单和空间提供了属性，用于验证控件交互的状态
+布尔类型：
+$valid
+$invalid
+$dirty
+$pristine
+对象：
+$error
+
+注意事项：
+①给表单以及表单组件 加上name属性
+②给需要用到的表单组件 ，加上ngModel
+③属性的用法
+myForm.t_age.$dirty/$pristine/$valid/$invalid/$error
+
+
+练习：SPA
+一个完整的html，有两个代码片段:submitOrder.html detail.html.
+要求：
+submitOrder: 有两个输入框，输入名称、数量，要求是必须输入的，还有一个确认下单的按钮（是整个表单验证情况是关联的）--》detail（跳转时需要传名称）
+
+detail:将submitOrder页面跳转时传过来的名称显示出来
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

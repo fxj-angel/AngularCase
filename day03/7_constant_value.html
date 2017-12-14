@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <title></title>
+</head>
+<body>
+<div ng-controller="myCtrl">
+
+</div>
+
+<script>
+    var app = angular.module('myApp', ['ng']);
+
+    //创建常量服务
+    app.constant('$Author',{name:'King',email:'245@qq.com'});
+    //创建变量服务
+    app.value('$Config',{version:1});
+
+    app.controller('myCtrl', function ($scope,$Author,$Config) {
+        console.log($Author.email);
+        console.log($Config.version);
+    });
+</script>
+</body>
+</html>

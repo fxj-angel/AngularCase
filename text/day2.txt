@@ -1,0 +1,199 @@
+ng是由很多指令的：
+ngApp ngRepeat ngIf ngShow ngHide ngChecked ngDisabled ngSrc 
+ngBind ngClass ngStyle
+
+在webStorm中创建一个文件模板的基本步骤：
+①拷贝要使用的代码
+②点击左上角的file，选择new
+③选择Edit File Templates
+④点击弹窗中右上角的+号
+⑤修改name和extension为创建的文件模板的名称以及格式，点击ok保存即可
+
+
+一、自定义指令
+1、如何自定义？？
+angular.module()
+app.controller()
+
+//创建指令
+app.directive('指令的名称'，function(){
+	return {}
+})
+
+指令的命令规则：指令的名称由两部分构成，前缀：一般使我们模块或者项目的名字缩写； 后缀：用来描述指令的功能
+
+属性：
+template：指定要显示的模板内容
+restrict: "EAC" //E(Element)A(Attribute)C(Class)M(Comment)
+replace: true,替换并显示出来
+scope
+
+2、如何使用自定义的指令？？
+
+注意事项：指令在命名时是要遵循驼峰式命名规则；在使用时要遵循烤串式用方
+'tsHello' --> ts-hello
+根据配置指令时的restrict属性所对应的值，在合适的场景下使用指令。
+
+3、自定义指令传递参数
+
+怎么传？
+在调用指令的时候可以传 将参数作为属性对应的值
+
+怎么接受？
+scope
+
+
+
+练习：
+创建自定义指令tsDirective，调用该指令时（作为Element调用指令），传入ts-name='Hello World'，将HelloWorld显示出来。
+
+步骤：
+创建一个指令、调用时显示、在指令内部接受参数并显示、在调用时传参
+
+
+二、双向数据绑定
+方向1：从'数据'绑定到'视图'
+绑定方式：
+①常用指令： ngRepeat/ngIf/ngShow...
+②双花括号：{{}}
+
+方向2：从‘视图中用户的输入’绑定到‘数据’
+绑定方式：指令：ngModel
+
+如果要监听数据的变化：
+$scope.$watch('txt',function(){
+
+})
+
+
+练习：
+实现一个页面，在页面中有复选框（是否同意）、单选框（选择性别）、下拉菜单（选择城市）；
+采用ng来实现，同时将用户的每一项输入绑定到模型数据并监听数据的变化，在变化时输出对应的值。
+
+在实现下拉框的过程中，如果数据是动态的，可以通过ngOptions将数据绑定到视图中。
+ngOptions语法：
+ <select
+    ng-model="city"
+    ng-options="city.cityName for city in cities">
+ </select>
+
+三、过滤器
+
+3.1 内置的过滤器
+ng中的过滤器为了实现对于表达式结果的筛选、过滤、格式化，达到更好的表现效果。
+
+
+过滤器的语法：支持多重过滤和传参
+{{expression | 过滤器名称 : '参数' | 过滤器名称2：‘参数’ }}
+
+| -》 管道
+
+常用的过滤器：
+currency 货币样式的过滤器
+date 日期
+uppercase/lowercase 大小写的处理
+orderBy 对指定的数组进行升序或者降序排列
+number 格式化数字为文本（对有小数点的数据的处理）
+limitTo 限定数组或者字符串要显示的个数
+
+
+练习：有一个学生数组（5条数据），每个学生都有age score name；
+将学生数组根据score进行降序排序，然后只显示前三名
+提示：支持多重过滤（orderBy limitTo）
+
+
+3.2 自定义过滤器
+
+自定义过滤器方式：
+app.filter('过滤器名称',function(){
+	return function(input，arg){
+			//input是传递给过滤器的数据
+			//arg 是过滤器本身的参数
+		return '过滤后的结果'
+	}
+})
+
+
+使用自定义的过滤器:
+和内置的过滤器用法是一样的
+
+
+四、ng模块内置的方法
+
+序列化、反序列化
+
+toJson:将对象或者数组 序列化 为json格式的字符串
+fromJson：相反的过程
+
+
+五、服务
+
+服务的本质是一个单例对象，提供数据和对象。
+
+两大类：
+①内置服务
+$location、$http、$window、$scope...
+
+使用内置服务中提供的方法：
+	第一步 将需要用到的服务注入进来 function($scope,$location)
+	第二步 调用服务中提供的方法 数据。。
+
+②自定义的服务
+
+
+面试题：$scope与$rootScope之间的关系
+
+1、不同的控制器之间的数据是彼此隔离的
+2、不同的控制器之间如何共享数据？？
+
+$scope的id是从2开始依次往上递增，
+id为1的是谁？ $rootScope是根作用域对象，其余的$scope都是子对象
+
+方式1：借助于$rootScope
+
+把要共享的数据存在$rootScope,所有的子对象就可以读取该数据
+
+方式2：借助于控制器之间的嵌套
+在调用控制器的元素 之间的嵌套关系
+<div ng-controller='myCtrl02'>
+	<div ng-controller="myCtrl03"></div>
+</div>
+
+方式3：触发事件传递参数
+
+绑定事件：
+$scope.$on('事件名称',function(event,data){
+
+})
+
+触发事件：
+//从子作用对象 向 父作用域对象 传递事件
+$scope.$emit()
+//从父作用对象 向 子作用域对象 传递事件
+$scope.$broadcaset()
+
+
+每日练习：
+实现全选以及取消全选
+
+①构造数据
+对象数组
+
+②显示出来
+
+
+③关联部分选中和全部选中
+双向数据绑定
+
+
+
+
+
+
+
+
+
+
+
+
+

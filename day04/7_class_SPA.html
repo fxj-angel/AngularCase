@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <script src="js/angular-route.js"></script>
+    <title></title>
+</head>
+<body>
+<div ng-view></div>
+
+<script>
+    var app=angular.module('myApp',['ng','ngRoute']);
+    //配置路由
+    app.config(function($routeProvider){
+        $routeProvider.when('/mySubmit',{
+            templateUrl:'tpl/7_submitOrder.html',
+            controller:'submitCtrl'
+        }).when('/myDetail/:pName',{
+            templateUrl:'tpl/7_detail.html',
+            controller:'detailCtrl'
+        }).otherwise({
+            redirectTo:'/mySubmit'
+        })
+    });
+    //创建控制器
+    app.controller('submitCtrl',['$scope','$location',function($scope,$location){
+        $scope.jump=function(){
+            //跳转并发送参数
+            $location.path('/myDetail/'+$scope.p_name);
+        }
+    }]);
+    //创建详情页控制器
+    app.controller('detailCtrl',['$scope','$routeParams',function($scope,$routeParams){
+        $scope.productName=$routeParams.pName;
+    }])
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

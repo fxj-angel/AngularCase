@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="js/angular.js"></script>
+    <title></title>
+</head>
+<body>
+<h1>全选以及取消全选</h1>
+<div ng-controller="myCtrl">
+    <table width="200px" height="100px">
+        <thead>
+            <tr>
+                <th>请选择</th>
+                <th>姓 名</th>
+                <th>生 日</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="stu in list">
+                <td>
+                    <input ng-click="funcChange()" ng-model="stu.isChecked" type="checkbox"/>
+                </td>
+                <td>{{stu.name}}</td>
+                <td>{{stu.birthday}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <input ng-click="changeAll()" ng-model="selectAll" type="checkbox"/>全选/取消全选
+    <br/><br/>
+    <button ng-click="checkStatus()">查看</button>
+</div>
+
+<script>
+    var app = angular.module('myApp', ['ng']);
+    app.controller('myCtrl', function ($scope) {
+        $scope.list=[
+            {name:'Lucy',birthday:'2014-05-18',isChecked:false},
+            {name:'King',birthday:'1998-02-27',isChecked:false}
+        ];
+
+        //部分选中的checkbox点击时的处理函数
+        $scope.funcChange=function(){
+            $scope.selectAll=true;
+            angular.forEach($scope.list,function(value,key){
+                $scope.selectAll=value.isChecked&&$scope.selectAll;
+            })
+        };
+        //全部选中的checkbox点击时的处理函数
+        $scope.changeAll=function(){
+          angular.forEach($scope.list,function(value,key){
+              value.isChecked=$scope.selectAll;
+          })
+        };
+
+        //点击查看按钮时，通过弹窗显示选中的结果
+        $scope.checkStatus=function(){
+            var result="";
+            angular.forEach($scope.list,function(value,key){
+                //console.log(value,key);
+                if(value.isChecked){
+                    result+=value.name+"被选中\n";
+                }
+            });
+            alert(result);
+        }
+    });
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
